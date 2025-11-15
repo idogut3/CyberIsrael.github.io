@@ -1,0 +1,526 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>CyberIsrael — GitHub Pages (HTML/CSS/JS)</title>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#000;
+    --muted:#9CA3AF;
+    --card:#0f1113;
+    --accent1:#ef4444; /* red */
+    --accent2:#3b82f6; /* blue */
+    --accent3:#8b5cf6; /* purple */
+    --glass: rgba(255,255,255,0.04);
+    --glass-2: rgba(255,255,255,0.02);
+    --maxw: 1200px;
+    --radius: 14px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background:var(--bg);
+    color:#e6eef6;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    line-height:1.4;
+    overflow-x:hidden;
+  }
+
+  a{color:inherit;text-decoration:none}
+  button{font:inherit}
+
+  /* container */
+  .container{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+
+  /* NAV */
+  nav.topbar{
+    position:fixed;left:0;right:0;top:0;
+    z-index:60;
+    transition:all .28s ease;
+    padding:12px 0;
+    background:transparent;
+  }
+  nav.topbar.scrolled{
+    background: linear-gradient(180deg, rgba(0,0,0,.86), rgba(0,0,0,.7));
+    box-shadow:0 4px 20px rgba(0,0,0,.6);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(200,20,20,0.06);
+    padding:8px 0;
+  }
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .brand{display:flex;align-items:center;gap:12px}
+  .logo{
+    width:44px;height:44px;border-radius:10px;
+    background:linear-gradient(135deg,var(--accent1),var(--accent2));
+    display:flex;align-items:center;justify-content:center;
+    box-shadow: 0 6px 20px rgba(0,0,0,.6);
+  }
+  .logo svg{width:20px;height:20px;fill:white;opacity:0.98}
+  .brand-title{font-weight:800;font-size:20px;background:linear-gradient(90deg,var(--accent1),var(--accent3),var(--accent2)); -webkit-background-clip:text;background-clip:text;color:transparent}
+
+  .nav-links{display:flex;gap:18px;align-items:center}
+  .nav-links button{background:none;border:0;color:var(--muted);padding:6px 8px;border-radius:8px;cursor:pointer}
+  .nav-links button:hover{color:var(--accent1)}
+  .cta{
+    background:linear-gradient(90deg,var(--accent1),var(--accent2));
+    color:white;padding:10px 14px;border-radius:12px;border:0;cursor:pointer;font-weight:600;
+  }
+
+  /* HERO */
+  .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;padding-top:80px;overflow:hidden}
+  .hero .bg-grad{position:absolute;inset:0;background:radial-gradient(1200px 600px at 10% 20%, rgba(239,68,68,0.16), transparent 6%),
+                              radial-gradient(900px 500px at 90% 40%, rgba(59,130,246,0.14), transparent 12%),
+                              radial-gradient(700px 400px at 50% 95%, rgba(139,92,246,0.12), transparent 16%),
+                              linear-gradient(180deg,#000,#040404);
+    filter:blur(0px);
+    pointer-events:none;
+  }
+
+  /* decorative orbs */
+  .orb{position:absolute;border-radius:999px;filter:blur(36px);mix-blend-mode:screen;opacity:.9}
+  .orb.r1{width:300px;height:300px;left:40px;top:120px;background:linear-gradient(135deg,var(--accent1),transparent);animation:orb1 8s ease-in-out infinite}
+  .orb.r2{width:280px;height:280px;right:40px;top:200px;background:linear-gradient(135deg,transparent,var(--accent2));animation:orb2 10s ease-in-out infinite}
+  .orb.r3{width:300px;height:300px;left:45%;bottom:120px;background:linear-gradient(135deg,var(--accent3),transparent);animation:orb3 12s ease-in-out infinite}
+  @keyframes orb1{0%{transform:translateY(0) scale(1)}50%{transform:translateY(-20px) scale(1.03)}100%{transform:translateY(0) scale(1)}}
+  @keyframes orb2{0%{transform:translateY(0) scale(1)}50%{transform:translateY(18px) scale(1.02)}100%{transform:translateY(0) scale(1)}}
+  @keyframes orb3{0%{transform:translateY(0) scale(1)}50%{transform:translateY(-28px) scale(1.04)}100%{transform:translateY(0) scale(1)}}
+
+  /* floating cats - simple SVGs */
+  .cat{position:absolute;opacity:.12;will-change:transform}
+  .cat.c1{top:140px;left:24px;width:64px;height:64px;animation:floatA 20s linear infinite}
+  .cat.c2{top:220px;right:80px;width:84px;height:84px;animation:floatB 15s linear infinite}
+  .cat.c3{bottom:140px;left:33%;width:56px;height:56px;animation:floatC 18s linear infinite}
+  @keyframes floatA{0%{transform:translate(0,0)}25%{transform:translate(80px,-30px)}50%{transform:translate(0,-60px)}75%{transform:translate(80px, -30px)}100%{transform:translate(0,0)}}
+  @keyframes floatB{0%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(-120px, 60px) rotate(180deg)}100%{transform:translate(0,0) rotate(360deg)}}
+  @keyframes floatC{0%{transform:translate(0,0)}40%{transform:translate(60px, -40px)}70%{transform:translate(-30px, 40px)}100%{transform:translate(0,0)}}
+
+  .hero-inner{position:relative;z-index:10;text-align:center;max-width:980px;margin:0 auto;padding:40px 12px}
+  .badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:18px}
+  .badge{padding:8px 12px;border-radius:999px;font-weight:600;font-size:14px;background:linear-gradient(90deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03)}
+  .hero h1{font-size:64px;margin:8px 0 10px;font-weight:900;line-height:0.95;background:linear-gradient(90deg,var(--accent1),var(--accent3),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p.lead{font-size:20px;color:var(--muted);max-width:820px;margin:8px auto 18px}
+  .hero p.lead.small{font-size:17px;color:#bfcbd9}
+  .hero .hero-ctas{display:flex;gap:12px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+  .btn-ghost{background:transparent;border:2px solid rgba(255,255,255,0.06);padding:14px 22px;border-radius:12px;color:var(--muted);cursor:pointer}
+  .btn-primary{background:linear-gradient(90deg,var(--accent1),var(--accent2));padding:14px 22px;border-radius:12px;border:0;color:white;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:10px}
+  .chev-down{margin-top:26px;display:inline-block;opacity:.7;animation:bounce 2s infinite}
+  @keyframes bounce{0%{transform:translateY(0)}50%{transform:translateY(10px)}100%{transform:translateY(0)}}
+
+  /* sections */
+  section{padding:72px 0}
+  .section-title{font-size:36px;margin-bottom:12px;font-weight:800}
+  .section-sub{color:var(--muted);max-width:820px;margin:0 auto 28px}
+
+  /* cards grid */
+  .grid{display:grid;gap:18px}
+  .goals-grid{grid-template-columns:repeat(1,1fr)}
+  @media(min-width:720px){.goals-grid{grid-template-columns:repeat(3,1fr)}}
+  .card{
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border:1px solid rgba(255,255,255,0.04);
+    padding:20px;border-radius:12px;min-height:170px;position:relative;overflow:hidden;
+    transition:transform .28s ease, box-shadow .28s ease;
+  }
+  .card:hover{transform:translateY(-8px);box-shadow:0 30px 60px rgba(0,0,0,.5)}
+  .card .accent-pill{width:64px;height:64px;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;margin-bottom:10px}
+  .card h3{margin:6px 0 8px;font-size:20px}
+  .card p{color:var(--muted);margin:0}
+
+  /* who grid */
+  .who-grid{grid-template-columns:repeat(1,1fr)}
+  @media(min-width:720px){.who-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(min-width:1100px){.who-grid{grid-template-columns:repeat(5,1fr)}}
+  .who-card{text-align:center;padding:22px;border-radius:12px;background:transparent;border:1px solid rgba(255,255,255,0.03)}
+  .who-card .emoji{font-size:36px;margin-bottom:10px}
+  .who-card p{font-weight:600;color:#e6eef6}
+
+  /* coming grid */
+  .coming-grid{grid-template-columns:repeat(1,1fr)}
+  @media(min-width:720px){.coming-grid{grid-template-columns:repeat(3,1fr)}}
+
+  /* community stats */
+  .stats{display:flex;gap:18px;justify-content:center}
+  .stat{ text-align:center}
+  .stat .num{font-size:44px;font-weight:900;background:linear-gradient(90deg,var(--accent1),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .lead-card{max-width:900px;margin:0 auto;padding:28px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.04)}
+
+  /* resources cards */
+  .two-col{grid-template-columns:repeat(1,1fr)}
+  @media(min-width:820px){.two-col{grid-template-columns:repeat(2,1fr)}}
+
+  /* join card */
+  .join-card{max-width:760px;margin:0 auto;padding:24px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.04)}
+  .join-list{display:flex;flex-direction:column;gap:12px}
+
+  /* footer */
+  footer{padding:40px 0;border-top:1px solid rgba(255,255,255,0.03);margin-top:40px}
+  .footer-inner{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .footer-brand{display:flex;align-items:center;gap:10px}
+  .footer-brand .logo{width:38px;height:38px}
+
+  /* small */
+  @media(max-width:700px){
+    .hero h1{font-size:40px}
+    .brand-title{font-size:18px}
+  }
+
+  /* subtle decorations */
+  .grad-top{height:1px;background:linear-gradient(90deg,transparent,var(--accent1),transparent);width:100%;display:block;margin-bottom:18px}
+</style>
+</head>
+
+<body>
+  <!-- NAV -->
+  <nav id="topbar" class="topbar">
+    <div class="container nav-inner">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">
+          <!-- simple shield svg -->
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2 4 5v6c0 5 3.4 9.6 8 11 4.6-1.4 8-6 8-11V5l-8-3z"/></svg>
+        </div>
+        <div>
+          <div class="brand-title">CyberIsrael</div>
+        </div>
+      </div>
+
+      <div class="nav-links" id="navlinks">
+        <button onclick="scrollToId('goals')">Goals</button>
+        <button onclick="scrollToId('community')">Community</button>
+        <button onclick="scrollToId('resources')">Resources</button>
+        <button class="cta" onclick="scrollToId('join')">Join Us</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <main>
+    <header class="hero" id="home">
+      <div class="bg-grad"></div>
+
+      <!-- orbs -->
+      <div class="orb r1"></div>
+      <div class="orb r2"></div>
+      <div class="orb r3"></div>
+
+      <!-- cats -->
+      <div class="cat c1" aria-hidden="true">
+        <!-- cat icon (simplified) -->
+        <svg viewBox="0 0 24 24" width="100%" height="100%"><path fill="currentColor" d="M12 2c-1.656 0-3 1.345-3 3 0 .5.14.965.375 1.366C8.368 7.08 7 9.651 7 13v3c0 2.21 1.79 4 4 4s4-1.79 4-4v-3c0-3.349-1.368-5.92-2.375-6.634.235-.401.375-.866.375-1.366 0-1.655-1.344-3-3-3z"/></svg>
+      </div>
+      <div class="cat c2" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="100%" height="100%"><path fill="currentColor" d="M12 2c-1.656 0-3 1.345-3 3 0 .5.14.965.375 1.366C8.368 7.08 7 9.651 7 13v3c0 2.21 1.79 4 4 4s4-1.79 4-4v-3c0-3.349-1.368-5.92-2.375-6.634.235-.401.375-.866.375-1.366 0-1.655-1.344-3-3-3z"/></svg>
+      </div>
+      <div class="cat c3" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="100%" height="100%"><path fill="currentColor" d="M12 2c-1.656 0-3 1.345-3 3 0 .5.14.965.375 1.366C8.368 7.08 7 9.651 7 13v3c0 2.21 1.79 4 4 4s4-1.79 4-4v-3c0-3.349-1.368-5.92-2.375-6.634.235-.401.375-.866.375-1.366 0-1.655-1.344-3-3-3z"/></svg>
+      </div>
+
+      <div class="hero-inner" id="heroContent">
+        <div class="badges">
+          <div class="badge">🎉 Welcome to CyberIsrael</div>
+          <div class="badge">🇮🇱 The Israeli Cyber Community</div>
+        </div>
+
+        <h1 id="heroTitle">CyberIsrael</h1>
+
+        <p class="lead">Building something great for the first time — a real, supportive, and professional community in the field of cyber.</p>
+        <p class="lead small">A network of cyber professionals from all fields, ranks, and backgrounds.</p>
+
+        <div class="hero-ctas">
+          <button class="btn-primary" onclick="scrollToId('join')">Join Community
+            <svg style="opacity:.9" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="white" d="M13 5l7 7-7 7v-4H4v-6h9z"/></svg>
+          </button>
+          <button class="btn-ghost" onclick="scrollToId('goals')">Learn More</button>
+        </div>
+
+        <div style="margin-top:26px">
+          <div class="chev-down" onclick="scrollToId('goals')" title="Scroll down">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- GOALS -->
+    <section id="goals">
+      <div class="container">
+        <div style="text-align:center;margin-bottom:36px">
+          <div class="section-title">Our Three Goals</div>
+          <div class="section-sub">As a community, we are committed to these core missions</div>
+        </div>
+
+        <div class="grid goals-grid">
+          <!-- Goal 1 -->
+          <div class="card" aria-labelledby="g1">
+            <div style="height:6px;border-radius:6px;background:linear-gradient(90deg,var(--accent1),#b91c1c);position:absolute;inset:0 0 auto 0"></div>
+            <div style="display:flex;align-items:center;gap:14px">
+              <div class="accent-pill" style="background:linear-gradient(135deg,var(--accent1),#b91c1c)">🔗</div>
+              <div style="font-size:40px;font-weight:900;background:linear-gradient(90deg,var(--accent1),var(--accent3));-webkit-background-clip:text;color:transparent">1</div>
+            </div>
+            <h3 id="g1" style="margin-top:8px">Connect <span style="font-size:20px">🔗</span></h3>
+            <p>Create a network of cyber men and women from all fields, ranks, and backgrounds.</p>
+          </div>
+
+          <!-- Goal 2 -->
+          <div class="card">
+            <div style="height:6px;border-radius:6px;background:linear-gradient(90deg,var(--accent2),#2563eb);position:absolute;inset:0 0 auto 0"></div>
+            <div style="display:flex;align-items:center;gap:14px">
+              <div class="accent-pill" style="background:linear-gradient(135deg,var(--accent2),#2563eb)">📈</div>
+              <div style="font-size:40px;font-weight:900;background:linear-gradient(90deg,var(--accent1),var(--accent3));-webkit-background-clip:text;color:transparent">2</div>
+            </div>
+            <h3>Improve <span style="font-size:20px">📈</span></h3>
+            <p>Learn, share, practice, and develop in order to raise the level of knowledge and professionalism of all community members.</p>
+          </div>
+
+          <!-- Goal 3 -->
+          <div class="card">
+            <div style="height:6px;border-radius:6px;background:linear-gradient(90deg,var(--accent3),#7c3aed);position:absolute;inset:0 0 auto 0"></div>
+            <div style="display:flex;align-items:center;gap:14px">
+              <div class="accent-pill" style="background:linear-gradient(135deg,var(--accent3),#7c3aed)">🌐</div>
+              <div style="font-size:40px;font-weight:900;background:linear-gradient(90deg,var(--accent1),var(--accent3));-webkit-background-clip:text;color:transparent">3</div>
+            </div>
+            <h3>Expose <span style="font-size:20px">🌐</span></h3>
+            <p>Open the door to the cyber world to every curious person — accessible knowledge belongs to everyone.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHO -->
+    <section>
+      <div class="container">
+        <div style="text-align:center;margin-bottom:26px">
+          <div class="section-title">Who Is The Community For? 👥</div>
+          <div style="max-width:820px;margin:0 auto">
+            <p style="font-size:26px;font-weight:800;margin-bottom:8px">Everyone.</p>
+            <p class="section-sub">It doesn't matter if you are a startup CEO, a veteran employee, a student, a soldier, or a high school student who is just starting — <strong style="background:linear-gradient(90deg,var(--accent1),var(--accent2));-webkit-background-clip:text;color:transparent">CyberIsrael is for everyone.</strong></p>
+          </div>
+        </div>
+
+        <div class="grid who-grid">
+          <div class="who-card"><div class="emoji">👔</div><p>Startup CEOs</p></div>
+          <div class="who-card"><div class="emoji">💼</div><p>Veterans</p></div>
+          <div class="who-card"><div class="emoji">🎓</div><p>Students</p></div>
+          <div class="who-card"><div class="emoji">🎖️</div><p>Soldiers</p></div>
+          <div class="who-card"><div class="emoji">🚀</div><p>Beginners</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMING -->
+    <section style="background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent)">
+      <div class="container">
+        <div style="text-align:center;margin-bottom:36px">
+          <div class="section-title">Coming Soon 📅</div>
+          <div class="section-sub">Exciting initiatives are on the horizon</div>
+        </div>
+
+        <div class="grid coming-grid">
+          <div class="card">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <div style="display:flex;align-items:center;gap:12px">
+                <div class="accent-pill" style="background:linear-gradient(135deg,var(--accent1),#b91c1c)">👥</div>
+                <div>
+                  <div style="font-weight:800">Conferences</div>
+                  <div style="color:var(--muted)">Large-scale gatherings bringing together the best minds in Israeli cybersecurity</div>
+                </div>
+              </div>
+              <div style="font-size:28px">🎤</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <div style="display:flex;align-items:center;gap:12px">
+                <div class="accent-pill" style="background:linear-gradient(135deg,var(--accent2),#2563eb)">📚</div>
+                <div>
+                  <div style="font-weight:800">Lectures</div>
+                  <div style="color:var(--muted)">Expert talks and presentations on cutting-edge cyber topics</div>
+                </div>
+              </div>
+              <div style="font-size:28px">📚</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <div style="display:flex;align-items:center;gap:12px">
+                <div class="accent-pill" style="background:linear-gradient(135deg,var(--accent3),#7c3aed)">💻</div>
+                <div>
+                  <div style="font-weight:800">Hackathons</div>
+                  <div style="color:var(--muted)">Hands-on competitions to test your skills and build innovative solutions</div>
+                </div>
+              </div>
+              <div style="font-size:28px">💻</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align:center;margin-top:22px;color:var(--muted)">...and more surprises! 🤫</div>
+      </div>
+    </section>
+
+    <!-- COMMUNITY IMPACT -->
+    <section id="community">
+      <div class="container">
+        <div style="text-align:center;margin-bottom:26px">
+          <div class="section-title">Our Growing Community</div>
+          <div class="section-sub">Together, we're shaping the future of cybersecurity in Israel</div>
+        </div>
+
+        <div class="stats" style="margin-bottom:22px">
+          <div class="stat"><div class="num">1,000+</div><div style="color:var(--muted)">Active Members</div></div>
+          <div class="stat"><div class="num">∞</div><div style="color:var(--muted)">Opportunities to Learn</div></div>
+          <div class="stat"><div class="num">1</div><div style="color:var(--muted)">Supportive Community</div></div>
+        </div>
+
+        <div class="lead-card">
+          <h3 style="margin:0 0 12px;font-size:22px">Want to Lead or Collaborate?</h3>
+          <p style="color:var(--muted);margin-bottom:10px">Do you have an idea for a collaboration? An interesting initiative? Or do you want to take an active part in the community? We are always open to collaborations!</p>
+          <p style="color:var(--muted);margin:0">If you want to lead, suggest, create or help - talk to us (the administrators), we are here for exactly that. 💪</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESOURCES -->
+    <section id="resources">
+      <div class="container">
+        <div style="text-align:center;margin-bottom:26px">
+          <div class="section-title">Community Resources</div>
+          <div class="section-sub">Connect with us and access our shared knowledge base</div>
+        </div>
+
+        <div class="grid two-col" style="max-width:960px;margin:0 auto;gap:18px">
+          <div class="card">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+              <div class="accent-pill" style="background:linear-gradient(135deg,#10b981,#16a34a)">💬</div>
+              <div>
+                <div style="font-weight:800">Community WhatsApp</div>
+                <div style="color:var(--muted)">Join our active WhatsApp group for daily discussions and updates</div>
+              </div>
+            </div>
+            <div style="margin-top:10px">
+              <a href="https://chat.whatsapp.com/IOpf245lzQx3FgUDNvSUZ2?mode=ems_wa_t" target="_blank" rel="noopener noreferrer">
+                <button class="btn-primary" style="width:100%">Join WhatsApp Group →</button>
+              </a>
+            </div>
+          </div>
+
+          <div class="card">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+              <div class="accent-pill" style="background:linear-gradient(135deg,#3b82f6,#06b6d4)">📁</div>
+              <div>
+                <div style="font-weight:800">Community Drive</div>
+                <div style="color:var(--muted)">Access our shared resources, documents, and learning materials</div>
+              </div>
+            </div>
+            <div style="margin-top:10px">
+              <a href="https://drive.google.com/drive/folders/1FpbtSTb0ztKClrIKZT1HdlGbLENTj_hj?usp=sharing" target="_blank" rel="noopener noreferrer">
+                <button class="btn-primary" style="width:100%">Access Drive →</button>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- JOIN -->
+    <section id="join" style="background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00))">
+      <div class="container">
+        <div style="text-align:center;margin-bottom:22px">
+          <div class="section-title">Join CyberIsrael Today 🚀</div>
+          <div class="section-sub">Become part of Israel's most supportive and professional cybersecurity community</div>
+        </div>
+
+        <div class="join-card">
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div style="display:flex;gap:10px;align-items:flex-start">
+              <div style="width:36px;height:36px;background:rgba(239,68,68,0.12);border-radius:8px;display:flex;align-items:center;justify-content:center">🔗</div>
+              <div style="color:var(--muted)">Connect with cyber professionals from all backgrounds</div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start">
+              <div style="width:36px;height:36px;background:rgba(59,130,246,0.12);border-radius:8px;display:flex;align-items:center;justify-content:center">📈</div>
+              <div style="color:var(--muted)">Learn and develop your cybersecurity skills</div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start">
+              <div style="width:36px;height:36px;background:rgba(139,92,246,0.12);border-radius:8px;display:flex;align-items:center;justify-content:center">🌐</div>
+              <div style="color:var(--muted)">Access knowledge and resources for everyone</div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start">
+              <div style="width:36px;height:36px;background:rgba(236,72,153,0.07);border-radius:8px;display:flex;align-items:center;justify-content:center">❤️</div>
+              <div style="color:var(--muted)">Be part of a supportive and collaborative community</div>
+            </div>
+
+            <div style="margin-top:8px">
+              <a href="https://chat.whatsapp.com/IOpf245lzQx3FgUDNvSUZ2?mode=ems_wa_t" target="_blank" rel="noopener noreferrer">
+                <button class="btn-primary" style="width:100%;padding:16px 22px;font-size:16px">Join Our Community →</button>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="container footer-inner">
+        <div class="footer-brand">
+          <div class="logo" aria-hidden="true"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2 4 5v6c0 5 3.4 9.6 8 11 4.6-1.4 8-6 8-11V5l-8-3z"/></svg></div>
+          <div style="font-weight:800">CyberIsrael</div>
+        </div>
+
+        <div style="color:var(--muted);text-align:right">
+          <div>🇮🇱 CyberIsrael - The Israeli Cyber Community</div>
+          <div style="margin-top:6px">Building a safer digital future together</div>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+<script>
+  // Smooth scrolling helper
+  function scrollToId(id){
+    const el = document.getElementById(id);
+    if(!el) return;
+    el.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
+  // Nav scroll detection => add scrolled class
+  const topbar = document.getElementById('topbar');
+  window.addEventListener('scroll', ()=> {
+    if(window.scrollY > 60) topbar.classList.add('scrolled');
+    else topbar.classList.remove('scrolled');
+
+    // hero fade/scale effect (approx of framer-motion transforms)
+    const hero = document.getElementById('heroContent');
+    const title = document.getElementById('heroTitle');
+    const max = 300;
+    const val = Math.min(window.scrollY, max);
+    const t = val / max;
+    const opacity = 1 - (t * 1.0);
+    const scale = 1 - (t * 0.05);
+    if(hero) hero.style.opacity = opacity;
+    if(title) title.style.transform = 'scale(' + scale + ')';
+  });
+
+  // small: close mobile nav in future (placeholder)
+  // accessibility: keyboard support for nav buttons (Enter)
+  document.querySelectorAll('.nav-links button').forEach(b=>{
+    b.addEventListener('keyup', e=> { if(e.key === 'Enter') b.click(); })
+  });
+
+  // On load, subtle entrance animations
+  window.addEventListener('load', ()=> {
+    document.getElementById('heroContent').style.transition = 'opacity .9s ease, transform .6s ease';
+    document.getElementById('heroContent').style.opacity = 1;
+  });
+</script>
+</body>
+</html>
